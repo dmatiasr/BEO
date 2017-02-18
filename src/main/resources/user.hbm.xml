@@ -1,0 +1,10 @@
+<hibernate-mapping><class name="Model.User" table="users">
+
+<id column="id" name="id"></id>
+
+<property name="name"/>
+<property name="address"/>
+
+</class>
+</hibernate-mapping>
+
