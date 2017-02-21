@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import static spark.Spark.*;
+import static Controller.JsonUtil.*;
+import Controller.UserController;
 import Dao.UserDao;
 import DaoImplementation.SessionManager;
 import DaoImplementation.UserDaoImpl;
@@ -13,42 +16,20 @@ import Model.User;
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args ){
-    	User user = new User("Matias","Address1");
-    	UserDao udao = new UserDaoImpl();
+public class App {
+	private static UserController ucontroller;
+    
+	public static void main( String[] args ){
+    	ucontroller = new UserController();
     	
-    	//Create
-    	System.out.println("CREATION");
-    	udao.create(user);
+    	get("/index",(req,res)->  "HelloWorld");
+    	get("/users",(req,res)-> ucontroller.getAll(req,res), json() );
+    	get("users/findById/:id",(req,res)->ucontroller.findById(req, res),json() );
+    	post("/users",(req,res)-> ucontroller.create(req, res) );
+    	put("/users/:id",(req,res)-> ucontroller.update(req,res));
+    	delete("/users/:id", (req,res)-> ucontroller.delete(req, res));
     	
-    	List<User> allUser = udao.getAll();
-    	for(int i=0;i< allUser.size();i++){
-    		System.out.println("User "+allUser.toString() );
-    	}
     	
-    	//Update
-    	System.out.println("UPDATE");
-    	
-    	user.setAddress("address2");
-    	udao.update(user);
-    	
-    	allUser = udao.getAll();
-    	System.out.println("--- 2nd search ---");
-    	for(int i=0;i< allUser.size();i++){
-    		System.out.println("User "+allUser.toString() );
-    	}
-    	
-    	//Delete
-    	System.out.println("DELETE");
-    	String id = user.getId();
-    	udao.delete(id);
-    	allUser = udao.getAll();
-    	System.out.println("--- 3rd search --- "+allUser.size() );
-    	
-    	for(int i=0;i< allUser.size();i++){
-    		System.out.println("User "+allUser.toString() );
-    	}
-    }
+    	after((req, res) -> {res.type("application/json");});
+    }	
 }
