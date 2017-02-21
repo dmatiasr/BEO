@@ -1,7 +1,3 @@
- drop database if exists backenddb;
-
-create database backenddb;
-
 
 CREATE TABLE Users (
     id text primary key, 

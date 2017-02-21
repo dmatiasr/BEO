@@ -2,18 +2,27 @@ package Controller;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import spark.Request;
 import spark.Response;
 import Dao.UserDao;
+import DaoImplementation.SessionManager;
 import DaoImplementation.UserDaoImpl;
 import Model.User;
 
 public class UserController {
 	
-	
+	private SessionManager sm = null;
+	private Session ss = null;
+
+	public UserController(){
+		sm = new SessionManager();
+		ss= sm.getSession();
+	}
 	
 	public List<User> getAll (Request req, Response resp){
-		UserDao udao = new UserDaoImpl();
+		UserDao udao = new UserDaoImpl(ss);
 		List<User> all = udao.getAll();
 		int status = all.size()>0 ? 200 : 204;
 		resp.status(status);
@@ -23,37 +32,31 @@ public class UserController {
 	
 	public String create(Request req, Response resp){
 		
-		UserDao udao = new UserDaoImpl();
-		if (req.queryParams("name")==null || req.queryParams("address")== null){
+		if (req.queryParams("name")==null || req.queryParams("address")== null || req.queryParams("name").isEmpty() || req.queryParams("address").isEmpty()){
 			resp.status(400);
-            resp.body("name or address are null");
+            resp.body("name or address are null or empty");
             return resp.body();
 		}
-		
-		System.out.println("pase 32");
-		
+		UserDao udao = new UserDaoImpl(ss);
+	
 		String nam = req.queryParams("name");
 		String addrs= req.queryParams("address");
 		User newu = new User(nam,addrs);
 		
-		System.out.println("TOSTRING "+newu.toString());
 		
 		boolean res = udao.create(newu);
-		
 		int status = res ? 201 : 409;
-		System.out.println(status+ " status");
 		resp.status(status);
 		if (res){
 			resp.body("User created");
 		}else{
-			resp.body("User no created, duplicated");
+			resp.body("User no created");
 		}
 		return resp.body();
-		
 	}
 	
 	public String delete(Request req, Response resp){
-		UserDao udao= new UserDaoImpl();
+		UserDao udao= new UserDaoImpl(ss);
 		if (req.queryParams("id").isEmpty() || req.queryParams("id")==null){
 			resp.status(400);
 			resp.body("id empty or null");
@@ -77,7 +80,7 @@ public class UserController {
 			return null;
 		}
 		
-		UserDao udao = new UserDaoImpl();
+		UserDao udao = new UserDaoImpl(ss);
 		User userf = udao.findOne(req.params("id"));
 		if (userf==null){
 			resp.status(409);
@@ -99,7 +102,7 @@ public class UserController {
 		toupdate.setId(req.params("id"));
 		toupdate.setName(req.params("name"));
 		toupdate.setAddress(req.params("address"));
-		UserDao udao = new UserDaoImpl();
+		UserDao udao = new UserDaoImpl(ss);
 		boolean res = udao.update(toupdate);
 		int status = res ? 201 :409;
 		resp.status(status);

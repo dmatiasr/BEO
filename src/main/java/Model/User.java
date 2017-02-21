@@ -59,5 +59,8 @@ public class User {
 	public String toString (){
 		return "id: "+id+" name: "+name+" address: "+address;
 	}
+	public boolean repOk(){
+		return (this.name!=null || !this.name.equals("") && (this.address!=null || !this.address.equals("")));
+	}
 
 }

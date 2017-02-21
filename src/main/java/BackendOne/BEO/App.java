@@ -30,6 +30,6 @@ public class App {
     	delete("/users/:id", (req,res)-> ucontroller.delete(req, res));
     	
     	
-    	after((req, res) -> {res.type("application/json");});
+    	//after((req, res) -> {res.type("application/json");});
     }	
 }

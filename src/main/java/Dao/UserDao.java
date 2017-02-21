@@ -11,5 +11,6 @@ public interface UserDao {
 	public boolean create(User us);
 	public boolean delete(String id);
 	public boolean update(User us);
-	
+	public List<User> findByName(String name);
+	public List<User> findByAddrs(String addrs);
 }

@@ -8,9 +8,8 @@ import org.hibernate.cfg.Configuration;
 
 
 public class SessionManager {
-	
 	public SessionManager(){
-		
+	
 	}
 	private SessionFactory getSessionFactory(){
 		SessionFactory sf;
