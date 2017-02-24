@@ -21,6 +21,7 @@ public class UserDaoImpl implements UserDao {
 		List<User> users = new LinkedList<User>();
 		//"from user" must be from Model.User
 		users.addAll( services.createQuery("from User").list() );
+		System.out.println(users);
 		return users;	
 	}
 
