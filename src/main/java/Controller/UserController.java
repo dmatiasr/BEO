@@ -26,12 +26,16 @@ public class UserController {
 		List<User> all = udao.getAll();
 		int status = all.size()>0 ? 200 : 204;
 		resp.status(status);
-		resp.body(all.toString());
+		if(status == 204){
+			resp.body("No hay contenido");
+		}else{
+			resp.body(all.toString());
+		}
 		return all;
 	}
 	
 	public String create(Request req, Response resp){
-		
+				
 		if (req.queryParams("name")==null || req.queryParams("address")== null || req.queryParams("name").isEmpty() || req.queryParams("address").isEmpty()){
 			resp.status(400);
             resp.body("name or address are null or empty");
@@ -57,7 +61,8 @@ public class UserController {
 	
 	public String delete(Request req, Response resp){
 		UserDao udao= new UserDaoImpl(ss);
-		if (req.queryParams("id").isEmpty() || req.queryParams("id")==null){
+		System.out.println(req.params("id"));
+		if (req.params("id").isEmpty() || req.params("id")==null){
 			resp.status(400);
 			resp.body("id empty or null");
 			return resp.body();
