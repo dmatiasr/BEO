@@ -1,0 +1,18 @@
+<div class="row" ng-controller="UserController">
+  <div class="col">
+    <form name="registerForm" ng-submit="add(formData)">
+      <div class="form-group">{{msg}}</div>
+						<div class="form-group">
+              <label for="nombre"> Nombre</label>
+              <input type="text" placeholder="Ingrese su nombre" ng-model="formData.name">
+            </div>
+            <div>
+              <label for="Direccion"> Direccion</label>
+              <input type="text" placeholder="Ingrese su direccion" ng-model="formData.address">
+            </div>
+            <div >
+              <button type="submit"> Agregar </button>
+            </div>
+    </form>
+  </div>
+</div>

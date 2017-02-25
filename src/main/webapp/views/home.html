@@ -1,0 +1,10 @@
+<div class="row" ng-controller="HomeController">
+	<div class="col-xs-12 users-container">
+		<div class="row">
+			<div class="col-xs-3 album" ng-repeat="user in users | orderBy:'name' | filter : load_users()">
+					{{user.name}}
+					{{user.address}}
+			</div>
+		</div>
+	</div>
+</div>

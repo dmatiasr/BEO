@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <title>Usuarios del Sistema</title>
+
+        <link rel="stylesheet" href="/stylesheets/bootstrap.css" >
+        <link rel="stylesheet" href="/stylesheets/style.css">
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.js"></script>
+
+        <script type="text/javascript" src="/app.js"> </script>
+        <script type="text/javascript" src="/javascript/controllers/homeController.js"> </script>
+        <script type="text/javascript" src="/javascript/controllers/userController.js">
+
+        </script>
+
+  </head>
+
+  <body>
+      <li><a href="#/users">Agregar Usuario</a></li>
+      <div ng-view=""></div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+how to create a server with 
+http-server
+
+1- install http-server :
+	npm install http-server -g
+2-run server :
+	http-server	
