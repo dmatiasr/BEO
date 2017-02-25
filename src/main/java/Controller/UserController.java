@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.google.gson.Gson;
+
 import spark.Request;
 import spark.Response;
 import Dao.UserDao;
@@ -35,16 +37,18 @@ public class UserController {
 	}
 	
 	public String create(Request req, Response resp){
-				
-		if (req.queryParams("name")==null || req.queryParams("address")== null || req.queryParams("name").isEmpty() || req.queryParams("address").isEmpty()){
+		Gson gson = new Gson();		
+		String json = req.body();
+		User requser= gson.fromJson(json,User.class);
+		if (requser.getName()==null || requser.getAddress()== null || requser.getName().isEmpty() || requser.getAddress().isEmpty()){
 			resp.status(400);
             resp.body("name or address are null or empty");
             return resp.body();
 		}
 		UserDao udao = new UserDaoImpl(ss);
 	
-		String nam = req.queryParams("name");
-		String addrs= req.queryParams("address");
+		String nam = requser.getName();
+		String addrs= requser.getAddress();
 		User newu = new User(nam,addrs);
 		
 		
