@@ -4,10 +4,9 @@ var app= angular.module("app",['ngRoute']);
     $routeProvider
       .when('/',{
         templateUrl :'./views/home.html',
-        controller : 'HomeController'
+        controller : 'UserController'
       })
-      .when('/users',{
-        templateUrl:'./views/users.html',
-        controller: 'UserController'
-      })
+      .otherwise({
+        redirectTo : './'
+      });
   });

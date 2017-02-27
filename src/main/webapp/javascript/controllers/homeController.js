@@ -5,7 +5,7 @@
   var user={name :'Pedro', address :'alla'}
 
 
-  load_users = function() {
+/*  load_users = function() {
     console.log('7');
     $http.get("http://localhost:4567/users").then(function callback(res) {
 
@@ -20,5 +20,5 @@
 
   load_users();
   console.log($scope);
-
+*/
 });

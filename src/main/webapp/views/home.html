@@ -1,10 +1,41 @@
-<div class="row" ng-controller="HomeController">
-	<div class="col-xs-12 users-container">
-		<div class="row">
+<div class="container-fluid" ng-controller="UserController">
+		<div class="cols-xs-12">
+				<form class="formControl" name="registerForm" ng-submit="add(formData)">
+		      <div>{{msg}}</div>
+								<div>
+		              <label for="nombre"> Nombre</label>
+		              <input type="text" placeholder="Ingrese su nombre" ng-model="formData.name">
+		            </div>
+		            <div>
+		              <label for="Direccion"> Direccion</label>
+		              <input type="text" placeholder="Ingrese su direccion" ng-model="formData.address">
+		            </div>
+		            <div >
+		              <button type="submit"> Agregar </button>
+		            </div>
+		    </form>
+			</div>
+			<div class="row">
+				<p>
+					Users :
+				</p>
+			</div>
 			<div class="col-xs-3 album" ng-repeat="user in users | orderBy:'name' | filter : load_users()">
-					{{user.name}}
+
+					{{user.name | uppercase}}
 					{{user.address}}
 			</div>
-		</div>
-	</div>
+			<div>
+				<form class="formControl" name="registerForm" ng-submit="delete(toDelete)">
+					<div>
+						<div>
+							<label for="Nombre">Nombre</label>
+					  	<input type="text" placeholder="Nombre de usuario a eliminar" ng-model="toDelete.name">
+							<label for="Direccion">Direccion</label>
+							<input type="text" placeholder="Direccion de Usuario a eliminar" ng-model="toDelete.address">
+							<button type="submit">Eliminar</button>
+						</div>
+					</div>
+				</form>
+			</div>
 </div>
