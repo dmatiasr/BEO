@@ -64,14 +64,31 @@ public class UserController {
 	}
 	
 	public String delete(Request req, Response resp){
-		UserDao udao= new UserDaoImpl(ss);
-		System.out.println(req.params("id"));
-		if (req.params("id").isEmpty() || req.params("id")==null){
+//		Gson gson = new Gson();		
+//		String json = req.body();
+//		System.out.println("body"+req.body());
+//		User requser= gson.fromJson(json,User.class);
+//		System.out.println("usuario a eliminar "+requser.toString());	
+//		
+//		if (requser.getName()==null || requser.getAddress()== null || requser.getName().isEmpty() || requser.getAddress().isEmpty()){
+//			resp.status(400);
+//            resp.body("name or address are null or empty");
+//            return resp.body();
+//		}
+
+		System.out.println("name "+req.queryParams("name"));
+		System.out.println("address"+req.queryParams("address"));
+		if (req.queryParams("name")==null || req.queryParams("name").isEmpty() || req.queryParams("address")==null || req.queryParams("address").isEmpty()){
 			resp.status(400);
-			resp.body("id empty or null");
+			resp.body("name or address are null or empty");
 			return resp.body();
 		}
-		boolean res =udao.delete(req.params("id"));
+		System.out.println("77");
+		User requser = new User();
+		requser.setName(req.queryParams("name"));
+		requser.setAddress(req.queryParams("address"));
+		UserDao udao= new UserDaoImpl(ss);
+		boolean res =udao.delete(requser);
 		int status = res ? 201 :409;
 		resp.status(status);
 		if (res) {
@@ -99,6 +116,40 @@ public class UserController {
 		resp.status(200);
 		resp.body();
 		return userf;
+	}
+	public List<User> findByName(Request req, Response resp){
+		System.out.println(req.params("name"));
+		if (req.params("name")==null || req.params("name").equals("")){
+			resp.status(400);
+			resp.body("id empty or null");
+			return null;
+		}
+		UserDao udao = new UserDaoImpl(ss);
+		List<User> toname= udao.findByName(req.params("name"));
+		if (toname.isEmpty()){
+			resp.status(409);
+			resp.body("Empty List");
+		}
+		resp.status(200);
+		resp.body(toname.toString());
+		return toname;
+	}
+	
+	public List<User> findByAddress (Request req, Response resp){
+		if (req.params("id")==null || req.params("id").equals("")){
+			resp.status(400);
+			resp.body("id empty or null");
+			return null;
+		}
+		UserDao udao = new UserDaoImpl(ss);
+		List<User> toaddr= udao.findByAddrs(req.params("address"));
+		if(toaddr.isEmpty()){
+			resp.status(409);
+			resp.body("Empty List");
+		}
+		resp.status(200);
+		resp.body(toaddr.toString());
+		return toaddr;
 	}
 	
 	public String update(Request req, Response resp){

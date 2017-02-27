@@ -75,14 +75,19 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-	public boolean delete(String id) {
-		if (id.isEmpty() || id==null) return false;		
-		if (this.findOne(id)==null) return false;
-		services.beginTransaction();
-		services.delete(this.findOne(id));
-		services.getTransaction().commit();;
+	public boolean delete(User us) {
 		
-		return true;
+		List<User> byname= new LinkedList<User>();
+		byname.addAll(this.findByName(us.getName()) );
+		if (byname.isEmpty()) return false;
+		for(int i=0; i<byname.size();i++){
+			if( byname.get(i).getAddress().equals(us.getAddress()) )
+				services.beginTransaction();
+				services.delete(byname.get(i));
+				services.getTransaction().commit();
+				return true;
+		}		
+		return false;
 	}
 
 	public boolean update(User us) {

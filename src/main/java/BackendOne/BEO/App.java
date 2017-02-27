@@ -47,11 +47,20 @@ public class App {
     	
     	
     	get("/index",(req,res)->  "HelloWorld");
+    	
     	get("/users",(req,res)-> ucontroller.getAll(req,res), json() );
+    	
     	get("users/findById/:id",(req,res)->ucontroller.findById(req, res),json() );
+    	
+    	get("users/findByName/:name",(req,res)-> ucontroller.findByName(req, res), json());
+    	
+    	get("users/findByAddress/:address", (req,res)-> ucontroller.findByAddress(req, res),json());
+    	
     	post("/users",(req,res)-> ucontroller.create(req, res) );
+    	
     	put("/users/:id",(req,res)-> ucontroller.update(req,res));
-    	delete("/users/:id", (req,res)-> ucontroller.delete(req, res));
+    	
+    	delete("/users/deletemethod", (req,res)-> ucontroller.delete(req, res));
     	
     	
     	//after((req, res) -> {res.type("application/json");});
